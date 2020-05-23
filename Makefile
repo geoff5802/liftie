@@ -19,7 +19,13 @@ all: lint test build
 	gzip --best --force --keep $<
 
 %.min.js: %.js
-	$(NODE_BIN)/uglifyjs $< --mangle --no-copyright --compress "pure_funcs=console.log" --output $@
+	$(NODE_BIN)/terser \
+		--compress "pure_funcs=console.log" \
+		--mangle \
+		--comments false \
+		--output $@ \
+		--ecma 2016 \
+		$<
 
 %.css: %.styl
 	$(NODE_BIN)/stylus $<

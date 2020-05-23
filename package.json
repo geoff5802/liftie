@@ -51,7 +51,7 @@
     "prompt": "~1",
     "should": "^13.0.0",
     "stylus": "> 0.38",
-    "uglify-js": "~3"
+    "terser": "^4.7.0"
   },
   "browser": {
     "chart": "chart.js",
