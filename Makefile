@@ -45,13 +45,15 @@ $(BUILD_DIR):
 $(BUILD_DIR)/$(PROJECT).js: $(SRC) node_modules | $(BUILD_DIR)
 	NODE_PATH=lib/client:node_modules \
 	$(NODE_BIN)/browserify \
-	--require resort/lifts \
-	--require resort/twitter \
-	--require resort/weather \
-	--require resort/webcams \
-	--require resort/snow \
-	--entry lib/client/boot/index.js \
-	--outfile $@
+		--plugin ./node_modules/bundle-collapser/plugin \
+		--plugin ./node_modules/common-shakeify \
+		--require resort/lifts \
+		--require resort/twitter \
+		--require resort/weather \
+		--require resort/webcams \
+		--require resort/snow \
+		--entry lib/client/boot/index.js \
+		--outfile $@
 
 $(BUILD_DIR)/$(PROJECT)-embed.js: lib/embed/index.js | $(BUILD_DIR)
 	echo '(function(){' > $@
