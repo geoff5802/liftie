@@ -33,6 +33,14 @@ all: lint test build
 %.min.css: %.css
 	$(NODE_BIN)/cleancss --skip-rebase -O1 --output $@ $<
 
+%.js: %.debug.js
+	$(NODE_BIN)/exorcist \
+		--error-on-missing \
+		--base $(abspath $(CURDIR)/..) \
+		--root / \
+		--url /scripts/$(@F).map \
+		$@.map < $< > $@
+
 lint:
 	$(NODE_BIN)/jshint $(LINT_SRC)
 
@@ -42,9 +50,10 @@ test:
 $(BUILD_DIR):
 	mkdir -p $@
 
-$(BUILD_DIR)/$(PROJECT).js: $(SRC) node_modules | $(BUILD_DIR)
+$(BUILD_DIR)/$(PROJECT).debug.js: $(SRC) node_modules | $(BUILD_DIR)
 	NODE_PATH=lib/client:node_modules \
 	$(NODE_BIN)/browserify \
+		--debug \
 		--plugin ./node_modules/bundle-collapser/plugin \
 		--plugin ./node_modules/common-shakeify \
 		--require resort/lifts \

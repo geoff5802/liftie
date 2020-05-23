@@ -36,6 +36,7 @@
     "tweet-html": "^1.3.1"
   },
   "devDependencies": {
+    "@pirxpilot/exorcist": "^2.0.0",
     "@pirxpilot/replay": "^2.2.1",
     "autoprefixer": "~9",
     "browserify": "~16",
